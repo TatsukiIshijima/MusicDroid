@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/notificationbg"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:paddingLeft="16dp"
+        android:orientation="vertical">
+        
+        <!--タイトル-->
+        <TextView
+            android:id="@+id/notification_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:focusable="true"
+            android:ellipsize="marquee"
+            android:singleLine="true"
+            style="@android:style/TextAppearance.StatusBar.EventContent.Title"/>
+
+        <!--サブタイトル-->
+        <TextView
+            android:id="@+id/notification_subtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:scrollHorizontally="true"/>
+    </LinearLayout>
+
+    <!--前の曲に戻るボタン-->
+    <ImageButton
+        android:id="@+id/prev_button_notification"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/notification_icon_prev"/>
+
+    <!--再生/停止ボタン-->
+    <ImageButton
+        android:id="@+id/play_button_notification"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:background="@drawable/notification_icon_play"/>
+
+    <!--次の曲に進むボタン-->
+    <ImageButton
+        android:id="@+id/next_button_notification"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/notification_icon_next"/>
+</LinearLayout>
