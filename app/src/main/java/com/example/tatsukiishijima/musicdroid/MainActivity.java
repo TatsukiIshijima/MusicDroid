@@ -43,10 +43,10 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                         fragment = SongFragment.newInstance();
                         break;
                     case 1:
-                        fragment = RootFragment.newInstance();
+                        fragment = AlbumFragment.newInstance();
                         break;
                     case 2:
-                        fragment = ArtistFragment.newInstance();
+                        fragment = RootFragment.newInstance();
                         break;
                     default:
                         break;
@@ -73,11 +73,6 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-        int backStackCnt = getSupportFragmentManager().getBackStackEntryCount();
-        if (backStackCnt != 0) {
-            getFragmentManager().popBackStack();
-        }
     }
 
     @Override

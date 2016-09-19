@@ -14,7 +14,6 @@
         <TextView
             android:id="@+id/songTitle"
             android:text="SongTitle"
-            android:textSize="20dp"
             android:ellipsize="end"
             android:singleLine="true"
             android:layout_width="wrap_content"
@@ -23,7 +22,6 @@
         <TextView
             android:id="@+id/songArtistName"
             android:text="artist"
-            android:textSize="15dp"
             android:ellipsize="end"
             android:singleLine="true"
             android:layout_width="wrap_content"
@@ -33,9 +31,8 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/SongTime"
+        android:id="@+id/songDuration"
         android:text="0:00"
-        android:textSize="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="5dp"

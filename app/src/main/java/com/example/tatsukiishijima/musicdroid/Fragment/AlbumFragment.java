@@ -40,24 +40,19 @@ public class AlbumFragment extends Fragment{
         // オブジェクトの作成
         ExpandableListView expandableListView = (ExpandableListView) rootView.findViewById(R.id.AlbumExpandListView);
 
-        String[] FILLED_PROJECTION = {
-                MediaStore.Audio.Albums._ID,
-                MediaStore.Audio.Albums.ALBUM,
-                MediaStore.Audio.Albums.ALBUM_ART,
-                MediaStore.Audio.Media._ID,
-                MediaStore.Audio.Albums.ALBUM_KEY,
-                MediaStore.Audio.Albums.ARTIST,
-                MediaStore.Audio.Albums.NUMBER_OF_SONGS,
-        };
         ContentResolver resolver = getActivity().getContentResolver();
         // アルバム一覧を取得するためのCursorの作成
-        mCursor = resolver.query(MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI,
-                FILLED_PROJECTION, null, null, "ALBUM ASC");
+        mCursor = resolver.query(MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI,                      // 検索したいデータのURI
+                                 null,                                                              // 取得したいカラム
+                                 null,                                                              // 検索条件
+                                 null,                                                              // 検索条件パラメータ
+                                 "ALBUM ASC");                                                      // ソート条件
         // アダプターの作成
         AlbumAdapter albumAdapter = new AlbumAdapter(mCursor, getContext());
 
         expandableListView.setAdapter(albumAdapter);
 
+        /* 画面遷移テスト
         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
@@ -70,7 +65,7 @@ public class AlbumFragment extends Fragment{
                 return true;
             }
         });
-
+        */
         return rootView;
     }
 }

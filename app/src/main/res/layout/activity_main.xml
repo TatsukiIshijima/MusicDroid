@@ -12,6 +12,45 @@
         android:layout_width="match_parent"
         android:layout_height="180dp"
         android:background="@drawable/sample">
+
+        <ImageView
+            android:id="@+id/playTrackImage"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/icon"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/rewindButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/rewind_button"
+                />
+
+            <ImageButton
+                android:id="@+id/playButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:src="@drawable/play_button"/>
+
+            <ImageButton
+                android:id="@+id/forwardButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/forward_button"/>
+
+        </LinearLayout>
+
     </RelativeLayout>
 
     <RelativeLayout

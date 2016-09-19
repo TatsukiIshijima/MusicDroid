@@ -2,6 +2,7 @@ package com.example.tatsukiishijima.musicdroid.Fragment;
 
 import android.content.ContentResolver;
 import android.database.Cursor;
+import android.database.CursorWrapper;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -15,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CursorAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.tatsukiishijima.musicdroid.Adapter.ArtistAdapter;
 import com.example.tatsukiishijima.musicdroid.R;
@@ -39,52 +41,43 @@ public class ArtistFragment extends Fragment {
         // オブジェクトの作成
         ExpandableListView expandableListView = (ExpandableListView) rootView.findViewById(R.id.ArtistExpandListView);
 
-        String[] FILLED_PROJECTION = {
-                MediaStore.Audio.Artists._ID,
-                MediaStore.Audio.Artists.ARTIST,
-                MediaStore.Audio.Artists.ARTIST_KEY,
-                MediaStore.Audio.Artists.NUMBER_OF_ALBUMS,
-                MediaStore.Audio.Artists.NUMBER_OF_TRACKS,
-        };
-
         ContentResolver resolver = getActivity().getContentResolver();
-        mCursor = resolver.query(MediaStore.Audio.Artists.EXTERNAL_CONTENT_URI,
-                                       FILLED_PROJECTION, null, null,"ARTIST  ASC");
+        mCursor = resolver.query(MediaStore.Audio.Artists.EXTERNAL_CONTENT_URI,                     // 検索したいデータのURI
+                                 null,                                                              // 取得したいカラム
+                                 null,                                                              // 検索条件
+                                 null,                                                              // 検索条件パラメータ
+                                 "ARTIST ASC");                                                     // ソート条件
 
-        ArtistAdapter adapter = new ArtistAdapter(mCursor, getContext());
+        final ArtistAdapter adapter = new ArtistAdapter(mCursor, getContext());
 
         expandableListView.setAdapter(adapter);
-
         /*
-        ListView listView = (ListView) rootView.findViewById(R.id.artistListView);
-
-        String[] FILLED_PROJECTION = {
-                MediaStore.Audio.Artists._ID,
-                MediaStore.Audio.Artists.ARTIST,
-                MediaStore.Audio.Artists.ARTIST_KEY,
-                MediaStore.Audio.Artists.NUMBER_OF_ALBUMS,
-                MediaStore.Audio.Artists.NUMBER_OF_TRACKS,
-        };
-
-        ContentResolver resolver = getActivity().getContentResolver();
-        mCursor = resolver.query(MediaStore.Audio.Artists.EXTERNAL_CONTENT_URI,                // 検索したいデータのURI(基本はEXTERNALでOK)
-                FILLED_PROJECTION,                                                                   // 取得するカラム（情報）
-                null,                                                                                // 以下条件指定
-                null,
-                "ARTIST  ASC");
-
-        ArtistAdapter adapter = new ArtistAdapter(getContext(), mCursor);
-        listView.setAdapter(adapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                AlbumFragment fragment = AlbumFragment.newInstance();
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+
+                // クリックされた場所の情報を取り出す
+                CursorWrapper cw = (CursorWrapper) adapter.getChild(groupPosition, childPosition);
+                String albumKey = cw.getString(cw.getColumnIndex(MediaStore.Audio.Albums.ALBUM_KEY));
+                String album    = cw.getString(cw.getColumnIndex(MediaStore.Audio.Albums.ALBUM));
+                String artist   = cw.getString(cw.getColumnIndex(MediaStore.Audio.Albums.ARTIST));
+                String albumArt = cw.getString(cw.getColumnIndex(MediaStore.Audio.Albums.ALBUM_ART));
+
+                // 画面遷移 & 値渡し
+                Fragment fragment = new AlbumDetailsFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("AlbumKey", albumKey);
+                bundle.putString("Album", album);
+                bundle.putString("Artist", artist);
+                bundle.putString("AlbumArt", albumArt);
+                fragment.setArguments(bundle);
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
-                ft.replace(R.id.contents, fragment);
+                ft.replace(R.id.root_frame, fragment);
+                ft.setTransition(ft.TRANSIT_FRAGMENT_OPEN);
                 ft.addToBackStack(null);
                 ft.commit();
+
+                return true;
             }
         });
         */

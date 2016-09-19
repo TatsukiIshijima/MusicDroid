@@ -31,7 +31,7 @@ public class RootFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.root_fragment, container, false);
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.root_frame, new AlbumFragment());
+        ft.replace(R.id.root_frame, new ArtistFragment());
         ft.commit();
         return rootView;
     }

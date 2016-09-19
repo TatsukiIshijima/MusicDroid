@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,9 +41,11 @@ public class AlbumAdapter extends CursorTreeAdapter {
 
         // ここでアルバムに含まれる曲のCursorを取得する
         ContentResolver resolver = mContext.getContentResolver();
-        Cursor cursor = resolver.query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, null,
+        Cursor cursor = resolver.query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+                                       null,
                                        MediaStore.Audio.Media.ALBUM_KEY + " = ?",
-                                       new String[] {mAlbumKey}, MediaStore.Audio.Media.TRACK);
+                                       new String[] {mAlbumKey},
+                                       MediaStore.Audio.Media.TRACK);
         return cursor;
     }
 
