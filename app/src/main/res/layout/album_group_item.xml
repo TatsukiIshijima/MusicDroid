@@ -23,6 +23,7 @@
                 android:id="@+id/albumGroupAlbumName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
                 android:ellipsize="end"
                 android:singleLine="true"/>
 
@@ -30,6 +31,7 @@
                 android:id="@+id/albumGroupArtistName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
                 android:ellipsize="end"
                 android:singleLine="true"/>
 
