@@ -1,11 +1,16 @@
 package com.example.tatsukiishijima.musicdroid.Fragment;
 
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.database.Cursor;
+import android.database.CursorWrapper;
 import android.os.Bundle;
+import android.os.RemoteException;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +19,7 @@ import android.widget.ExpandableListView;
 import android.widget.Toast;
 
 import com.example.tatsukiishijima.musicdroid.Adapter.AlbumAdapter;
+import com.example.tatsukiishijima.musicdroid.IMusicService;
 import com.example.tatsukiishijima.musicdroid.R;
 
 /**
@@ -22,6 +28,8 @@ import com.example.tatsukiishijima.musicdroid.R;
 public class AlbumFragment extends Fragment{
 
     private Cursor mCursor;
+    private String mAlbumKey;
+    private OnMusicSelectedListener mMusicSelectedListener;
 
     public AlbumFragment() {
 
@@ -30,6 +38,21 @@ public class AlbumFragment extends Fragment{
     public static AlbumFragment newInstance() {
         AlbumFragment albumFragment = new AlbumFragment();
         return albumFragment;
+    }
+
+    /***
+     * 曲が選択されたときに呼ばれる
+     */
+    public interface OnMusicSelectedListener {
+        public void onSelectMusic(String albumKey, int track);
+    }
+
+    /***
+     * OnMusicSelectedListenerを登録する
+     */
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mMusicSelectedListener = (OnMusicSelectedListener) activity;
     }
 
     @Override
@@ -48,24 +71,22 @@ public class AlbumFragment extends Fragment{
                                  null,                                                              // 検索条件パラメータ
                                  "ALBUM ASC");                                                      // ソート条件
         // アダプターの作成
-        AlbumAdapter albumAdapter = new AlbumAdapter(mCursor, getContext());
+        final AlbumAdapter albumAdapter = new AlbumAdapter(mCursor, getContext());
 
         expandableListView.setAdapter(albumAdapter);
 
-        /* 画面遷移テスト
+        // 子リストのクリックイベント
         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                Toast.makeText(getContext(),String.valueOf(groupPosition) + String.valueOf(childPosition), Toast.LENGTH_SHORT).show();
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.root_frame, new ArtistFragment());
-                ft.setTransition(ft.TRANSIT_FRAGMENT_OPEN);
-                ft.addToBackStack(null);
-                ft.commit();
+                // クリックされた場所の情報を取り出す
+                CursorWrapper cw = (CursorWrapper) albumAdapter.getGroup(groupPosition);
+                mAlbumKey = cw.getString(cw.getColumnIndex(MediaStore.Audio.Albums.ALBUM_KEY));
+                mMusicSelectedListener.onSelectMusic(mAlbumKey, childPosition);
                 return true;
             }
         });
-        */
+
         return rootView;
     }
 }

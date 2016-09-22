@@ -22,4 +22,5 @@ interface IMusicService {
 
     void registerCallback(IMusicServiceCallback callback);                                          // コールバックメソッドを登録する
     void unregisterCallback(IMusicServiceCallback callback);                                        // コールバックメソッドを登録解除する
+
 }

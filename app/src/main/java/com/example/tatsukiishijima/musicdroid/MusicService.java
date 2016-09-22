@@ -34,13 +34,15 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
     /***
      * Notificationに渡すPendingIntentを作成する
      */
+    /*
     PendingIntent getDialogPendingIntent(String action) {
         return PendingIntent.getActivity(this, 0, new Intent(action).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK), 0);
     }
-
+    */
     /***
      * Notificationを表示する
      */
+    /*
     public void makeNotify() {
 
         final Resources res = getResources();
@@ -88,6 +90,7 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
         // Notificationを表示する
         notificationManager.notify(Consts.NOTIFICATION_DEFAULT, builder.getNotification());
     }
+    */
 
     /***
      * アプリケーションにUI更新を通知する
@@ -118,7 +121,7 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
         uiUpdate();
 
         // Notificationを表示する
-        makeNotify();
+        //makeNotify();
     }
 
     /***
@@ -317,16 +320,15 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
         }
     }
 
-    // 1曲再生し終えたら呼ばれる
-    @Override
-    public void onCompletion(MediaPlayer mp) {
-        // 次の曲へ移動する
-        mpNext();
-    }
-
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         return mBinder;
+    }
+
+    @Override
+    public void onCompletion(MediaPlayer mp) {
+        // 次の曲へ移動する
+        mpNext();
     }
 }
